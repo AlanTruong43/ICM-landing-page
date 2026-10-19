@@ -1,0 +1,210 @@
+---
+import { site } from '../data/site';
+
+const stats = [
+  ['400+', "models, through Orbio's gateway"],
+  ['1h', 'CREDIT settles every hour'],
+  ['$1', 'of inference per CREDIT'],
+];
+const pillars = [
+  ['Fixed price, any model', 'Lock a dollar amount of inference now. Spend it on whichever model your agent needs later.'],
+  ['Settles in real CREDIT', 'Every position pays out Orbio CREDIT. Activate it into the gateway like any other CREDIT.'],
+  ['Onchain, end to end', "Vault, markets and oracle live on Robinhood Chain beside Orbio's contracts. Check every number yourself."],
+];
+
+// Quote panels. Numbers stay placeholders until the live quote API exists.
+const panels = [
+  {
+    id: 'lock',
+    tab: 'Lock budget',
+    label: 'Inference to lock',
+    prefix: '$',
+    value: '1,200',
+    unit: 'CREDIT',
+    rows: [
+      ['Delivered', '100 CREDIT a week, 12 weeks'],
+      ['Usable on', 'Any of 400+ models'],
+      ['Maturity', '30 Jun 2027', true],
+    ],
+    quote: ['You pay', '[LIVE QUOTE] USDG', 'Locked price', '[x.xx] / CREDIT'],
+    cta: 'Lock price',
+    notice: 'Price locked: {v} CREDIT of inference, delivered weekly until 30 Jun 2027.',
+    note: 'Quotes go live when the first maturity opens.',
+  },
+  {
+    id: 'sell',
+    tab: 'Sell yield',
+    label: 'Staked ORBIO to sell yield on',
+    prefix: '',
+    value: '50,000',
+    unit: 'ORBIO',
+    rows: [
+      ['You sell', 'YT, the CREDIT stream to maturity'],
+      ['You keep', 'Your ORBIO, returned at maturity'],
+      ['Maturity', '30 Jun 2027', true],
+    ],
+    quote: ['You receive', '[LIVE QUOTE] USDG', 'YT price', '[x.xx] / YT'],
+    cta: 'Sell yield',
+    notice: 'Yield sold: the CREDIT stream on {v} ORBIO is sold. Your ORBIO is returned at maturity.',
+    note: 'Opens with Yield split, Jan 2027. Yield is variable, not guaranteed.',
+  },
+  {
+    id: 'borrow',
+    tab: 'Borrow',
+    label: 'CREDIT to borrow',
+    prefix: '',
+    value: '1,000',
+    unit: 'CREDIT',
+    rows: [
+      ['Collateral', 'USDG, PT or ORBIO'],
+      ['Rate', 'Variable, set by the market'],
+      ['Liquidation', 'If collateral value falls too far'],
+    ],
+    quote: ['Borrow rate', '[LIVE]% APR', 'Max LTV', '[xx]%'],
+    cta: 'Borrow CREDIT',
+    notice: 'Borrow confirmed: {v} CREDIT sent to your wallet.',
+    note: 'Opens with the CREDIT market, Q1 2027. Collateral can be liquidated.',
+  },
+];
+---
+
+<section id="top" class="relative mx-auto max-w-[1200px] px-6 pb-10 pt-14">
+  <svg viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true" class="pointer-events-none absolute left-0 top-10 h-[420px] w-full opacity-55">
+    <path d="M0 360 C 260 350, 420 300, 600 220 S 980 90, 1200 70" fill="none" stroke="#C9FF3F" stroke-width="2"></path>
+    <path d="M0 390 C 280 385, 460 340, 640 270 S 1000 150, 1200 135" fill="none" stroke="rgba(20,17,14,0.10)" stroke-width="1.5"></path>
+    <path d="M0 410 C 300 405, 500 375, 680 320 S 1020 220, 1200 205" fill="none" stroke="rgba(20,17,14,0.06)" stroke-width="1.5"></path>
+  </svg>
+
+  <div class="relative flex flex-wrap items-start gap-12">
+    <div class="min-w-0 flex-[999_1_560px]">
+      <span class="inline-flex items-center gap-2 rounded-full border border-line bg-white/70 px-3 py-1.5 font-mono text-xs text-body">
+        <span class="size-1.5 rounded-full bg-olive"></span>Inference capital markets · built on Orbio CREDIT
+      </span>
+      <h1 class="mt-6 font-display text-[clamp(44px,6vw,76px)] font-bold leading-[1.02] tracking-[-0.035em]">
+        Lock your AI costs.<br />Trade the <span class="rounded-lg bg-accent px-[0.12em] [box-decoration-break:clone]">inference curve</span>.
+      </h1>
+      <p class="mt-6 max-w-[540px] text-[19px] leading-[1.55] text-body">
+        Fixed-rate, borrowable and hedgeable CREDIT. One vault on top of Orbio, so agents can budget compute ahead and stakers can sell their yield forward.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-5">
+        <a href={site.appUrl} class="btn-accent min-h-12 rounded-xl px-6 py-3.5 text-[15px] no-underline">Open the Terminal</a>
+        <a href={site.paperUrl} class="text-sm text-ink">Read the paper ↗</a>
+      </div>
+      <dl class="mt-12 flex flex-wrap gap-10">
+        {stats.map(([value, label]) => (
+          <div>
+            <dt class="font-mono text-[34px] font-medium tracking-tight">{value}</dt>
+            <dd class="m-0 text-[13px] text-muted">{label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="min-w-0 max-w-[440px] flex-[1_1_360px] rounded-[20px] border border-line bg-white/80 p-6 shadow-[0_24px_48px_-28px_rgba(20,17,14,0.25)]">
+      <div role="tablist" aria-label="Action" class="flex gap-5 border-b border-line">
+        {panels.map((p, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${p.id}`}
+            aria-controls={`panel-${p.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            class:list={[
+              'tab -mb-px min-h-11 cursor-pointer border-0 border-b-2 bg-transparent pb-3 font-display text-sm font-medium',
+              i === 0 ? 'border-olive text-ink' : 'border-transparent text-muted',
+            ]}
+          >{p.tab}</button>
+        ))}
+      </div>
+
+      {panels.map((p, i) => (
+        <div role="tabpanel" id={`panel-${p.id}`} aria-labelledby={`tab-${p.id}`} hidden={i !== 0}>
+          <label for={`amount-${p.id}`} class="mt-5 block text-[13px] text-body">{p.label}</label>
+          <div class="mt-2 flex items-center gap-2 rounded-[14px] border border-line bg-panel px-4 py-3">
+            {p.prefix && <span class="font-mono text-xl text-muted">{p.prefix}</span>}
+            <input id={`amount-${p.id}`} type="text" inputmode="numeric" value={p.value} class="min-w-0 flex-1 border-0 bg-transparent font-mono text-[28px] text-ink outline-none" />
+            <span class="font-mono text-xs text-muted">{p.unit}</span>
+          </div>
+          <dl class="mt-4 flex flex-col gap-2.5 text-sm">
+            {p.rows.map(([k, v, mono]) => (
+              <div class="flex justify-between gap-3">
+                <dt class="text-muted">{k}</dt>
+                <dd class:list={['m-0 text-right', mono && 'font-mono']}>{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="mt-4 flex items-center justify-between gap-3 rounded-xl border border-olive/25 bg-accent/20 px-4 py-3.5">
+            <div>
+              <div class="text-[13px] text-body">{p.quote[0]}</div>
+              <div class="font-mono text-[22px] text-olive">{p.quote[1]}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[13px] text-body">{p.quote[2]}</div>
+              <div class="font-mono text-[15px] text-olive">{p.quote[3]}</div>
+            </div>
+          </div>
+          <button type="button" data-notice={p.notice} class="cta btn-accent mt-4 min-h-[52px] w-full cursor-pointer rounded-xl border-0 text-[15px]">{p.cta}</button>
+          <p role="status" class="notice mt-3 hidden rounded-xl border border-olive/30 bg-accent/25 px-4 py-3 text-[13px] text-ink"></p>
+          <p class="mt-3 text-xs text-muted">{p.note}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="relative mt-14 grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
+    {pillars.map(([title, text]) => (
+      <div class="rounded-[14px] border border-line bg-white/65 px-[18px] py-4">
+        <div class="flex items-center gap-2 text-sm font-semibold"><span class="size-1.5 rounded-full bg-olive"></span>{title}</div>
+        <p class="mt-1.5 text-[13px] text-body">{text}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+
+  function select(tab: HTMLButtonElement, focus = false) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      t.classList.toggle('border-olive', on);
+      t.classList.toggle('text-ink', on);
+      t.classList.toggle('border-transparent', !on);
+      t.classList.toggle('text-muted', !on);
+      const panel = document.getElementById(t.getAttribute('aria-controls') ?? '');
+      if (panel) panel.hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.cta').forEach((btn) => {
+    let timer: number;
+    btn.addEventListener('click', () => {
+      const box = btn.parentElement!.querySelector<HTMLElement>('.notice')!;
+      const v = btn.closest<HTMLElement>('[role="tabpanel"]')!.querySelector('input')!.value;
+      box.textContent = '✓ ' + (btn.dataset.notice ?? '').replace('{v}', v);
+      box.classList.remove('hidden');
+      clearTimeout(timer);
+      timer = window.setTimeout(() => box.classList.add('hidden'), 5000);
+    });
+  });
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (e) => {
+      const last = tabs.length - 1;
+      const next =
+        e.key === 'ArrowRight' ? tabs[i === last ? 0 : i + 1] :
+        e.key === 'ArrowLeft' ? tabs[i === 0 ? last : i - 1] :
+        e.key === 'Home' ? tabs[0] :
+        e.key === 'End' ? tabs[last] : null;
+      if (next) {
+        e.preventDefault();
+        select(next, true);
+      }
+    });
+  });
+</script>

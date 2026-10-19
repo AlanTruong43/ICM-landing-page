@@ -1,0 +1,82 @@
+---
+import { book } from '../data/site';
+
+const meta = [
+  ['Mint vs activate vs sell', 'hourly'],
+  ['Backing per $ICM', 'hourly'],
+  ['Public API + oracle feed', 'live'],
+];
+---
+
+<section id="terminal" class="section">
+  <h2 class="h2 max-w-[760px]">Inference has a yield curve. Now it has a market.</h2>
+  <p class="mt-4 max-w-[620px] text-[17px] text-body">
+    The Terminal is free and live first. It turns Orbio's order book and staking contract into two numbers the whole ecosystem can quote.
+  </p>
+  <div class="mt-10 flex flex-wrap gap-5">
+    <div class="card min-w-0 flex-[3_1_520px] overflow-hidden rounded-[18px]">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-ink/8 px-5 py-4">
+        <div class="flex items-center gap-2 text-[15px] font-semibold"><span class="size-1.5 rounded-full bg-ink"></span>CREDIT book depth</div>
+        <span class="font-mono text-xs text-muted">Orbio order book · sample, 17 Oct 2026</span>
+      </div>
+      <div class="flex justify-between px-5 pb-1 pt-3 font-mono text-xs text-muted"><span>discount</span><span>available credits</span></div>
+      <div id="book-depth">
+      {book.map((row) => (
+        <div class="relative flex items-center justify-between px-5 py-2 font-mono text-sm" data-usd={row.usd}>
+          <span class="bar absolute inset-y-0.5 right-0 bg-accent/30 transition-[width] duration-700 ease-out" style={`width:${row.width}`}></span>
+          <span class="relative">{row.label}</span>
+          <span class="amount relative">{row.amount}</span>
+        </div>
+      ))}
+      </div>
+      <div class="h-3"></div>
+    </div>
+
+    <div class="flex min-w-0 flex-[2_1_340px] flex-col gap-3">
+      <div class="rounded-[18px] bg-ink p-5 text-cream">
+        <div class="font-mono text-xs text-cream/65">CREDIT DISCOUNT INDEX · CDI</div>
+        <div class="mt-2 font-mono text-[40px] text-accent">[LIVE]%</div>
+        <div class="mt-1 text-[13px] text-cream/75">Volume-weighted discount on every CREDIT fill, 24h · 7d · 30d</div>
+      </div>
+      <div class="card rounded-[18px] p-5">
+        <div class="font-mono text-xs text-muted">INFERENCE YIELD · IY</div>
+        <div class="mt-2 font-mono text-[40px] text-olive">[LIVE]%</div>
+        <div class="mt-1 text-[13px] text-body">CREDIT earned per staked ORBIO, priced at CDI, annualized</div>
+      </div>
+      <div class="card flex flex-col gap-2.5 rounded-[18px] p-5 text-sm">
+        {meta.map(([k, v]) => (
+          <div class="flex justify-between gap-3"><span class="text-body">{k}</span><span class="font-mono text-muted">{v}</span></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // DEMO ONLY: jitters the sample book so the bars visibly track the numbers.
+  // When the API exists, replace fetchBook() with a real request and keep the rest.
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('#book-depth [data-usd]'));
+
+  async function fetchBook(current: number[]): Promise<number[]> {
+    // e.g. return (await fetch('/api/book')).json();  // number[] of USD per discount level, same order as rows
+    return current.map((v) => Math.max(100, Math.round(v * (0.85 + Math.random() * 0.3))));
+  }
+
+  function render(values: number[]) {
+    const max = Math.max(...values);
+    rows.forEach((row, i) => {
+      row.dataset.usd = String(values[i]);
+      row.querySelector<HTMLElement>('.bar')!.style.width = Math.round((values[i] / max) * 100) + '%';
+      row.querySelector<HTMLElement>('.amount')!.textContent = '$' + values[i].toLocaleString('en-US');
+    });
+  }
+
+  if (rows.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let values = rows.map((r) => Number(r.dataset.usd));
+    setInterval(async () => {
+      if (document.hidden) return;
+      values = await fetchBook(values);
+      render(values);
+    }, 2500);
+  }
+</script>

@@ -1,0 +1,29 @@
+---
+import { faqs } from '../data/site';
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<section id="faq" class="section">
+  <h2 class="h2">Questions, briefly.</h2>
+  <div class="mt-8 border-t border-ink/12">
+    {faqs.map((f) => (
+      <details class="border-b border-ink/12 py-[18px]">
+        <summary class="flex min-h-7 justify-between gap-4 text-base font-semibold">
+          <span>{f.q}</span>
+          <span class="faq-plus font-mono transition-transform duration-200" aria-hidden="true">+</span>
+        </summary>
+        <p class="mt-2.5 max-w-[760px] text-[15px] text-body">{f.a}</p>
+      </details>
+    ))}
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+</section>

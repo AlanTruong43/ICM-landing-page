@@ -1,0 +1,39 @@
+---
+const steps = [
+  'Quote a budget for any number of weeks',
+  'Lock it, with a max price you set',
+  "CREDIT lands in the agent's wallet every week",
+];
+---
+
+<section id="agents" class="section">
+  <div class="flex flex-wrap items-center gap-12">
+    <div class="min-w-0 flex-[1_1_400px]">
+      <h2 class="h2">Built for agents. Used through code.</h2>
+      <p class="mt-4 text-[17px] text-body">
+        ICM ships as MCP tools next to Orbio's, so an agent can price, lock and top up its own compute budget with no human checkout in the way.
+      </p>
+      <ol class="m-0 mt-7 flex list-none flex-col gap-3 p-0 text-[15px]">
+        {steps.map((s, i) => (
+          <li class="flex items-baseline gap-3">
+            <span class="font-mono text-[13px] text-olive">{String(i + 1).padStart(2, '0')}</span><span>{s}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="min-w-0 flex-[1_1_460px] overflow-hidden rounded-[18px] bg-ink">
+      <div class="flex items-center justify-between border-b border-cream/10 px-5 py-3.5 font-mono text-xs text-cream/65">
+        <span>agent.ts</span><span>planned SDK · illustrative</span>
+      </div>
+      <pre class="m-0 overflow-x-auto p-5 font-mono text-[13.5px] leading-[1.7] text-cream"><span class="text-cream/50">// lock 12 weeks of inference at today's price</span>
+<span class="text-accent">const</span> quote = <span class="text-accent">await</span> icm.getBudgetQuote({'{'}
+  credit: 1_200,           <span class="text-cream/50">// $ of inference</span>
+  weeks: 12,
+  maturity: <span class="text-sand">"2027-06-30"</span>,
+{'}'});
+
+<span class="text-accent">await</span> icm.lockBudget({'{'} ...quote, maxPrice: 0.65 {'}'});
+<span class="text-cream/50">// 100 CREDIT arrives every Monday</span></pre>
+    </div>
+  </div>
+</section>

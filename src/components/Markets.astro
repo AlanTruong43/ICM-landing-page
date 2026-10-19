@@ -1,0 +1,22 @@
+---
+import { markets } from '../data/site';
+---
+
+<section id="markets" class="section">
+  <h2 class="h2">Five markets. One vault.</h2>
+  <p class="mt-4 max-w-[620px] text-[17px] text-body">
+    Every market runs on the same icORBIO vault, so liquidity is shared instead of split. Each one ships only after the last one has users.
+  </p>
+  <div class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-4">
+    {markets.map((m) => (
+      <div class:list={['flex flex-col gap-2.5 rounded-[18px] bg-white/80 p-5', m.current ? 'border-2 border-olive' : 'border border-line']}>
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-[13px] text-muted">{m.n}</span>
+          <span class:list={['rounded-full px-[9px] py-[3px] font-mono text-[11px]', m.current ? 'bg-accent' : 'border border-ink/15']}>{m.when}</span>
+        </div>
+        <h3 class="m-0 font-display text-xl font-bold tracking-tight">{m.title}</h3>
+        <p class="m-0 text-sm text-body">{m.text}</p>
+      </div>
+    ))}
+  </div>
+</section>

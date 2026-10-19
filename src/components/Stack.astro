@@ -1,0 +1,22 @@
+---
+const layers = [
+  { name: 'Interfaces', items: ['Web app', 'MCP / SDK', 'Protocol agents on X'], cls: 'border border-ink/12 bg-white/80', chip: '' },
+  { name: 'ICM contracts', items: ['icORBIO vault', 'PT / YT + AMM', 'CREDIT market', 'CDI oracle', 'Hedge', 'Agent vaults', '$ICM staking'], cls: 'border-2 border-olive bg-accent/15', chip: 'bg-cream' },
+  { name: 'Orbio, live', items: ['ORBIO staking', 'CREDIT', 'Order book', 'Uniswap pool', 'Gateway', 'Agent Launchpad'], cls: 'border border-ink/12 bg-stack', chip: '' },
+];
+---
+
+<section class="section">
+  <h2 class="h2">One layer on top of Orbio.</h2>
+  <p class="mt-4 max-w-[620px] text-[17px] text-body">
+    ICM never touches inference itself. It only moves CREDIT and staked ORBIO through Orbio's live contracts.
+  </p>
+  <div class="mt-10 flex flex-col gap-2.5">
+    {layers.map((l) => (
+      <div class:list={['flex flex-wrap items-center gap-3 rounded-2xl px-5 py-4', l.cls]}>
+        <span class="flex-[0_0_180px] text-sm font-semibold">{l.name}</span>
+        {l.items.map((i) => <span class:list={['pill', l.chip]}>{i}</span>)}
+      </div>
+    ))}
+  </div>
+</section>

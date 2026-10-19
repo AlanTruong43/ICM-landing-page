@@ -1,0 +1,28 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="mx-auto max-w-[1200px] px-6 pb-[72px] pt-6">
+  <div class="flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-[clamp(28px,5vw,64px)] text-cream">
+    <h2 class="m-0 max-w-[620px] font-display text-[clamp(30px,4vw,48px)] font-bold leading-[1.05] tracking-[-0.03em]">
+      Price the future of <span class="text-accent">inference</span>.
+    </h2>
+    <div class="flex flex-wrap gap-3">
+      <a href={site.appUrl} class="btn-accent min-h-12 rounded-xl px-6 py-3.5 text-[15px] no-underline">Open the Terminal</a>
+      <a href={site.xUrl} class="inline-flex min-h-12 items-center rounded-xl border border-cream/30 px-6 py-3.5 font-display text-[15px] font-medium text-cream no-underline hover:text-accent">Follow {site.xHandle}</a>
+    </div>
+  </div>
+</section>
+
+<footer class="mx-auto flex max-w-[1200px] flex-wrap justify-between gap-6 border-t border-line px-6 pb-12 pt-8 text-[13px] text-muted">
+  <div class="flex max-w-[560px] flex-col gap-2">
+    <span class="font-display text-base font-bold text-ink">ICM</span>
+    <span>Inference capital markets, built on Orbio CREDIT. Rates are variable and depend on ORBIO trading volume. Nothing here is financial advice.</span>
+  </div>
+  <nav aria-label="Footer" class="flex flex-wrap items-start gap-5">
+    <a href="#terminal" class="text-body">Terminal</a>
+    <a href={site.docsUrl} class="text-body">Docs</a>
+    <a href={site.orbioUrl} class="text-body" rel="noopener">Orbio CREDIT ↗</a>
+    <a href={site.xUrl} class="text-body">X ↗</a>
+  </nav>
+</footer>

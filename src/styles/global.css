@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FAF8F4;
+  --color-ink: #14110E;
+  --color-body: #3F3F3B;
+  --color-muted: #66665E;
+  --color-olive: #436021;
+  --color-accent: #C9FF3F;
+  --color-sand: #EEDDC4;
+  --color-panel: #F2F1EC;
+  --color-stack: #EFEEE8;
+  --color-line: rgba(20, 17, 14, 0.1);
+
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a:hover {
+  color: var(--color-olive);
+}
+
+summary {
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-plus {
+  transform: rotate(45deg);
+}
+
+@layer components {
+  .h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 72px 24px;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid var(--color-line);
+  }
+  .btn-accent {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-ink);
+    background: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-accent:hover {
+    color: var(--color-ink);
+    filter: brightness(0.95);
+  }
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border: 1px solid rgba(20, 17, 14, 0.15);
+    border-radius: 999px;
+    padding: 5px 11px;
+  }
+}
