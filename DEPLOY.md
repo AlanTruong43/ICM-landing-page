@@ -1,6 +1,6 @@
 # Deploy: S3 + CloudFront
 
-Push to `main` runs `.github/workflows/deploy.yml`: build, sync `dist/` to S3, invalidate CloudFront.
+Run `.github/workflows/deploy.yml` manually (Actions tab, Run workflow). Once AWS is ready, add a `push: branches: [main]` trigger to it so it runs on every push: build, sync `dist/` to S3, invalidate CloudFront.
 
 ## One-time setup on AWS
 1. **S3 bucket** (private, Block Public Access ON, same region as `AWS_REGION`).
@@ -29,3 +29,8 @@ Push to `main` runs `.github/workflows/deploy.yml`: build, sync `dist/` to S3, i
 - Add `public/og.png` (1200x630).
 - Replace the demo success messages on the hero buttons.
 - Until launch, consider `noindex` so search engines skip the demo.
+
+## Preview on GitHub Pages
+`.github/workflows/pages.yml` publishes a noindex preview at https://alantruong43.github.io/ICM-landing-page/ on every push to `main`.
+Enable once: repo Settings > Pages > Build and deployment > Source: **GitHub Actions**.
+The preview build sets `SITE_URL`, `BASE_PATH` and `PUBLIC_NOINDEX`; a normal `npm run build` is unaffected.
